@@ -1,0 +1,17 @@
+﻿@model ToDoList.Models.Todo
+
+@{
+    ViewData["Title"] = "Деталі задачі";
+}
+
+<h2>Деталі задачі</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Назва: @Model.Title</h5>
+        <p class="card-text">Опис: @Model.Description</p>
+        <p class="card-text">Статус: @(Model.IsCompleted ? "Завершено" : "Не завершено")</p>
+    </div>
+</div>
+
+<a href="@Url.Action("Index", "Todo")" class="btn btn-primary mt-3">Назад до списку</a>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ToDoList.Models.Todo>
+
+@{
+    ViewData["Title"] = "Список задач";
+}
+
+<h2>Список задач</h2>
+
+<a href="@Url.Action("Create", "Todo")" class="btn btn-success mb-3">Додати задачу</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Статус</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var todo in Model)
+        {
+            <tr>
+                <td>@todo.Id</td>
+                <td>@todo.Title</td>
+                <td>@todo.Description</td>
+                <td>@(todo.IsCompleted ? "Завершено" : "Не завершено")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Todo", new { id = todo.Id })" class="btn btn-info btn-sm">Деталі</a>
+                    <a href="@Url.Action("Edit", "Todo", new { id = todo.Id })" class="btn btn-warning btn-sm">Редагувати</a>
+                    <form asp-action="Delete" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@todo.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
