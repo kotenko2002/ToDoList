@@ -20,3 +20,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.fa-circle-check:hover {
+    color: #198754;
+}

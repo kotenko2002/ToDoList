@@ -8,33 +8,23 @@
 
 <a href="@Url.Action("Create", "Todo")" class="btn btn-success mb-3">Додати задачу</a>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Статус</th>
-            <th>Дії</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var todo in Model)
-        {
-            <tr>
-                <td>@todo.Id</td>
-                <td>@todo.Title</td>
-                <td>@todo.Description</td>
-                <td>@(todo.IsCompleted ? "Завершено" : "Не завершено")</td>
-                <td>
-                    <a href="@Url.Action("Details", "Todo", new { id = todo.Id })" class="btn btn-info btn-sm">Деталі</a>
-                    <a href="@Url.Action("Edit", "Todo", new { id = todo.Id })" class="btn btn-warning btn-sm">Редагувати</a>
-                    <form asp-action="Delete" method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="@todo.Id" />
-                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="incomplete-tab" data-bs-toggle="tab" href="#incomplete" role="tab" aria-controls="incomplete" aria-selected="true">Незавершені задачі</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="complete-tab" data-bs-toggle="tab" href="#complete" role="tab" aria-controls="complete" aria-selected="false">Завершені задачі</a>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="incomplete" role="tabpanel" aria-labelledby="incomplete-tab">
+        @await Html.PartialAsync("_TodoTable", Model.Where(t => !t.IsCompleted))
+    </div>
+
+    <div class="tab-pane fade" id="complete" role="tabpanel" aria-labelledby="complete-tab">
+        @await Html.PartialAsync("_TodoTable", Model.Where(t => t.IsCompleted))
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
